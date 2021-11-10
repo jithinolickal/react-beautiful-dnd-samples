@@ -19,11 +19,22 @@ const Title = styled.h3`
 const TaskList = styled.div`
   padding: 8px;
   transition: background-color 0.2s ease;
-  background-color: ${(props) => (props.isDraggedOver ? "skyblue" : "inherit")};
+  background-color: ${(props) =>
+    props.isDraggedOver ? "lightblue" : "inherit"};
 
   flex-grow: 1;
   min-height: 100px;
 `;
+
+// Without Perf Optimization
+// const InnerList = ({ tasks }) =>
+//   tasks.map((task, index) => <Task key={task.id} task={task} index={index} />);
+
+// Perf Optimization - react memo/ Pure component
+const InnerList = React.memo(
+  ({ tasks }) =>
+    tasks.map((task, index) => <Task key={task.id} task={task} index={index} />) // Checking if old and new props are same, else render
+);
 
 function Column(props) {
   return (
@@ -43,9 +54,8 @@ function Column(props) {
                 {...provided.droppableProps}
                 isDraggedOver={snapshot.isDraggingOver}
               >
-                {props.tasks.map((task, index) => (
-                  <Task key={task.id} task={task} index={index} />
-                ))}
+                <InnerList tasks={props.tasks} />
+
                 {provided.placeholder}
                 {/* React element to increase available space during a drag - child of a component that we say droppable */}
               </TaskList>

@@ -1,3 +1,4 @@
+import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import { initialData } from "./data";
@@ -9,6 +10,12 @@ import styled from "styled-components";
 const Container = styled.div`
   display: flex;
 `;
+
+// Perf Optimization
+const InnerList = React.memo(({ column, taskMap, index }) => {
+  const tasks = column.taskId.map((taskId) => taskMap[taskId]);
+  return <Column key={column.id} column={column} tasks={tasks} index={index} />;
+});
 
 function App() {
   const [state, setstate] = useState(initialData);
@@ -47,7 +54,7 @@ function App() {
     }
 
     // Checking if outer column group is moved
-    if(type === 'column'){
+    if (type === "column") {
       const newColumnOrder = [...state.columnOrder];
       newColumnOrder.splice(source.index, 1);
       newColumnOrder.splice(destination.index, 0, draggableId);
@@ -60,7 +67,6 @@ function App() {
       setstate(newState);
       return; // Exit out of this iteration
     }
-
 
     const start = state.columns[source.droppableId];
     const finish = state.columns[destination.droppableId];
@@ -114,9 +120,15 @@ function App() {
           <Container ref={provided.innerRef} {...provided.droppableProps}>
             {state.columnOrder.map((columnId, index) => {
               const column = state.columns[columnId];
-              const tasks = column.taskId.map((taskId) => state.tasks[taskId]);
 
-              return <Column key={column.id} column={column} tasks={tasks} index={index} />;
+              return (
+                <InnerList
+                  key={column.id}
+                  column={column}
+                  taskMap={state.tasks}
+                  index={index}
+                />
+              );
             })}
             {provided.placeholder}
           </Container>
