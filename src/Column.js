@@ -7,7 +7,6 @@ const Container = styled.div`
   margin: 8px;
   border: 1px solid lightgrey;
   border-radius: 2px;
-  width: 200px;
 
   display: flex;
   flex-direction: column;
@@ -20,8 +19,7 @@ const TaskList = styled.div`
   transition: background-color 0.2s ease;
   background-color: ${(props) => (props.isDraggedOver ? "skyblue" : "white")};
 
-  flex-grow: 1;
-  min-height: 100px;
+  display: flex;
 `;
 
 function Column(props) {
@@ -32,6 +30,7 @@ function Column(props) {
         droppableId={props.column.id}
         // type={props.column.id === "col-3" ? "done" : "active"} // items from same type columns can drop items in other column
         isDropDisabled={props.isDropDisabled} // to control if anything can be dropped
+        direction="horizontal" // Drag direction vertical|horizontal. vertical by default
       >
         {(provided, snapshot) => (
           <TaskList

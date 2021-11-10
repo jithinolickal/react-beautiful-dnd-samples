@@ -6,7 +6,7 @@ const Container = styled.div`
   border: 1px solid lightgrey;
   border-radius: 2px;
   padding: 8px;
-  margin-bottom: 8px;
+  margin-right: 8px;
   background-color: ${(props) =>
     props.isDragDisabled
       ? "lightgrey"
@@ -16,13 +16,7 @@ const Container = styled.div`
 
   display: flex;
 `;
-const Handle = styled.div`
-  width: 20px;
-  height: 20px;
-  background-color: orange;
-  border-radius: 4px;
-  margin-right: 8px;
-`;
+
 
 function Task(props) {
   const isDragDisabled = props.task.id === "task-1";
@@ -40,7 +34,6 @@ function Task(props) {
           isDragging={snapshot.isDragging}
           isDragDisabled={isDragDisabled} // To set style
         >
-          <Handle />
           {props.task.content}
         </Container>
       )}
