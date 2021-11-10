@@ -16,11 +16,6 @@ export const initialData = {
       title: "In-Prog",
       taskId: [],
     },
-    "col-3": {
-      id: "col-3",
-      title: "Done",
-      taskId: [],
-    },
   },
-  columnOrder: ["col-1","col-2","col-3"],
+  columnOrder: ["col-1", "col-2"],
 };
