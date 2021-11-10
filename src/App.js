@@ -11,7 +11,7 @@ const Container = styled.div`
   display: flex;
 `;
 
-// Perf Optimization
+// Perf Optimization - react memo/ Pure component
 const InnerList = React.memo(({ column, taskMap, index }) => {
   const tasks = column.taskId.map((taskId) => taskMap[taskId]);
   return <Column key={column.id} column={column} tasks={tasks} index={index} />;
